@@ -1,0 +1,60 @@
+{
+ "nome": "O Guia do Canal Invisível",
+ "marca": "Canal Invisível",
+ "cta": "Quero o guia",
+ "formato": "E-book em PDF · acesso imediato · lê no celular",
+ "preco": {"de": "R$ 47,00", "por": "R$ 27,90", "parcelas": "ou 6x de R$ 5,24"},
+ "checkout": {"plataforma": "kiwify", "url": "[DEFINIR: link do checkout]"},
+ "url_publicada": "",
+ "tema": {
+  "fundo": "#0f172a", "texto": "#f8fafc", "texto_suave": "#94a3b8", "destaque": "#f59e0b", "texto_botao": "#111827",
+  "cartao": "rgba(148,163,184,.08)", "linha": "rgba(148,163,184,.2)", "raio": "12px",
+  "fonte_titulo": "Playfair Display", "fonte_texto": "Inter", "peso_titulo": 700
+ },
+ "hero": {
+  "rotulo": "Exemplo do modelo",
+  "titulo": "Todo canal que cresce sem rosto segue o mesmo método.",
+  "subtitulo": "3 capítulos, do nicho ao primeiro produto, para você montar o seu canal sem aparecer.",
+  "mockup": "img/mockup.png"
+ },
+ "itens": [
+  {"nome": "Por que canal dark funciona", "detalhe": "Ideia, roteiro e edição no lugar do rosto"},
+  {"nome": "Escolhendo o nicho", "detalhe": "Como achar tema com demanda nos últimos 14 dias"},
+  {"nome": "Da ideia ao vídeo", "detalhe": "Gancho, loop aberto, oferta e fecho"}
+ ],
+ "amostra": {
+  "rotulo": "Experimente",
+  "titulo": "Chegue mais perto.",
+  "texto": "Clique nos pontos para ver o que cada parte do guia explica.",
+  "abas": [
+   {"nome": "A capa", "imagem": "img/capa.png", "pontos": [
+     {"x": 30, "y": 32, "titulo": "O título", "texto": "A promessa em poucas palavras."},
+     {"x": 40, "y": 45, "titulo": "O subtítulo", "texto": "Para quem é e o que entrega."},
+     {"x": 78, "y": 82, "titulo": "A identidade", "texto": "Cada produto tem cores e fontes próprias."}
+   ]}
+  ]
+ },
+ "por_dentro": {
+  "rotulo": "Por dentro",
+  "titulo": "Cada capítulo, o mesmo caminho.",
+  "texto": "Você sempre sabe onde está e o que vem a seguir.",
+  "passos": [
+   {"titulo": "O problema", "texto": "O que trava quem está começando."},
+   {"titulo": "O exemplo", "texto": "Um caso real, com fonte."},
+   {"titulo": "O método", "texto": "O passo a passo aplicável."},
+   {"titulo": "A ação", "texto": "O que fazer hoje, em 10 minutos."}
+  ]
+ },
+ "lista_rotulo": "O conteúdo",
+ "lista_titulo": "Os 3 capítulos.",
+ "faq": [
+  {"p": "Preciso saber editar vídeo?", "r": "Não. O guia parte do zero."},
+  {"p": "Como eu recebo?", "r": "Logo após o pagamento, chega no seu e-mail o link para baixar o PDF."},
+  {"p": "Dá para ler no celular?", "r": "Sim. O PDF foi diagramado para ler no celular, no tablet ou no computador."},
+  {"p": "E se eu não gostar?", "r": "Você tem 7 dias de garantia: pede o reembolso direto na plataforma, sem perguntas."}
+ ],
+ "numeros": [{"valor": "3", "rotulo": "capítulos"}, {"valor": "1", "rotulo": "método"}, {"valor": "único", "rotulo": "pagamento"}],
+ "final": {"titulo": "Depois deste guia, você não começa do zero.", "texto": "Leve o método inteiro por menos que um lanche."},
+ "garantia": "Garantia de 7 dias: não gostou, devolvemos 100%.",
+ "rodape": "Página de exemplo do modelo canal-dark."
+}

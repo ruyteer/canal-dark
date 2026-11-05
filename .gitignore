@@ -1,0 +1,16 @@
+node_modules/
+__pycache__/
+*.pyc
+# mídias pesadas ficam fora do Git
+producao/*/assets/
+producao/*/render/
+producao/*/hf-*/
+producao/*/*.mp3
+producao/*/*.mp4
+producao/*/*.wav
+*.src.*
+*.lock
+pipeline/painel/dist/
+produto/*/dist/
+vendas/produtos/*/site/
+vendas/produtos/*/print-*.jpg

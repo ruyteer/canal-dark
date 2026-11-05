@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do canal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffffff;--fg:#09090b;--muted:#71717a;--card:#ffffff;--border:#e4e4e7;--soft:#f4f4f5;--accent:#18181b;--accent-fg:#fafafa;
+  --ok:#16a34a;--ok-bg:#dcfce7;--warn:#b45309;--warn-bg:#fef3c7;--info:#1d4ed8;--info-bg:#dbeafe;--ring:#a1a1aa}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#09090b;--fg:#fafafa;--muted:#a1a1aa;--card:#0c0c0e;--border:#27272a;--soft:#18181b;
+  --accent:#fafafa;--accent-fg:#18181b;--ok:#4ade80;--ok-bg:#052e16;--warn:#fbbf24;--warn-bg:#3a2a05;--info:#93c5fd;--info-bg:#172554;--ring:#52525b}}
+:root[data-theme="dark"]{--bg:#09090b;--fg:#fafafa;--muted:#a1a1aa;--card:#0c0c0e;--border:#27272a;--soft:#18181b;
+  --accent:#fafafa;--accent-fg:#18181b;--ok:#4ade80;--ok-bg:#052e16;--warn:#fbbf24;--warn-bg:#3a2a05;--info:#93c5fd;--info-bg:#172554;--ring:#52525b}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--fg);font:14px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 16px 48px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:24px;font-weight:700;letter-spacing:-.02em}
+.sub{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+@media (max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px}
+.stat .k{color:var(--muted);font-size:12px;font-weight:500}
+.stat .v{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-top:4px}
+.tabs{display:inline-flex;background:var(--soft);border-radius:8px;padding:3px;gap:2px;margin-bottom:12px;flex-wrap:wrap}
+.tabs button{border:0;background:transparent;color:var(--muted);font:500 13px Inter,system-ui,sans-serif;padding:6px 12px;border-radius:6px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--card);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.toolbar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+input[type=search]{border:1px solid var(--border);background:var(--card);color:var(--fg);border-radius:8px;padding:7px 10px;font:13px Inter,system-ui,sans-serif;min-width:220px;outline:none}
+input[type=search]:focus{border-color:var(--ring)}
+.table{overflow-x:auto;padding:0}
+table{width:100%;border-collapse:collapse;min-width:640px}
+th{text-align:left;font-weight:500;color:var(--muted);font-size:12px;padding:10px 14px;border-bottom:1px solid var(--border)}
+td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:last-child td{border-bottom:0}
+.title{font-weight:500}
+.meta{color:var(--muted);font-size:12px}
+.badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--border);white-space:nowrap}
+.b-ok{background:var(--ok-bg);color:var(--ok);border-color:transparent}
+.b-warn{background:var(--warn-bg);color:var(--warn);border-color:transparent}
+.b-info{background:var(--info-bg);color:var(--info);border-color:transparent}
+a{color:var(--fg);text-underline-offset:3px}
+.btn{display:inline-block;border:1px solid var(--border);border-radius:8px;padding:4px 10px;font-size:12px;font-weight:500;text-decoration:none;white-space:nowrap}
+.btn:hover{background:var(--soft)}
+h2{font-size:15px;font-weight:600;margin:26px 0 10px}
+.links{display:grid;gap:8px}
+.links a{display:flex;justify-content:space-between;gap:12px;text-decoration:none}
+.links .u{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
+.empty{padding:36px 16px;text-align:center;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div><h1>Painel do canal</h1><div class="sub" id="canal"></div></div>
+    <div class="sub" id="upd"></div>
+  </header>
+  <div class="grid" id="stats"></div>
+  <div class="toolbar">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <input type="search" id="q" placeholder="Buscar título ou tema">
+  </div>
+  <div class="card table"><table><thead><tr><th>Data</th><th>Título</th><th>Tipo</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+  <h2>Links</h2>
+  <div class="card links" id="links"></div>
+</div>
+<script>
+const D = /*DADOS*/null || {canal:"Meu canal",atualizado:"",videos:[],links:[]};
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const rows = [];
+for (const v of D.videos) {
+  const items = Object.entries(v.items || {});
+  if (!items.length) rows.push({v, kind:"longo", it:{}});
+  for (const [kind, it] of items) rows.push({v, kind, it});
+}
+rows.sort((a,b) => (b.it.publish_at || b.v.created || "").localeCompare(a.it.publish_at || a.v.created || ""));
+function st(it){
+  const s = it.status || (it.url ? "enviado" : "em produção");
+  const now = new Date();
+  if (it.publish_at && it.url && new Date(it.publish_at) <= now && /agendado/.test(s)) return ["publicado","b-ok"];
+  if (/agendado/.test(s)) return [s,"b-info"];
+  if (/público|publicado/.test(s)) return [s,"b-ok"];
+  return [s,"b-warn"];
+}
+const isShort = r => r.kind.startsWith("short");
+const stats = [
+  ["Vídeos longos", rows.filter(r=>!isShort(r)).length],
+  ["Shorts", rows.filter(isShort).length],
+  ["Agendados", rows.filter(r=>st(r.it)[0].startsWith("agendado")).length],
+  ["Publicados", rows.filter(r=>st(r.it)[1]==="b-ok").length],
+];
+$("#stats").innerHTML = stats.map(([k,v]) => `<div class="card stat"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+$("#canal").textContent = D.canal;
+$("#upd").textContent = D.atualizado ? "Atualizado em " + D.atualizado : "";
+const tabs = [["todos","Todos"],["longo","Longos"],["short","Shorts"],["agendado","Agendados"]];
+let tab = "todos";
+try { tab = localStorage.getItem("painel-tab") || "todos"; } catch(e) {}
+$("#tabs").innerHTML = tabs.map(([k,l]) => `<button role="tab" data-k="${k}">${l}</button>`).join("");
+$("#tabs").onclick = e => { const k = e.target.dataset.k; if (!k) return; tab = k; try{localStorage.setItem("painel-tab",k)}catch(e){} draw(); };
+$("#q").oninput = draw;
+function fmt(d){ if(!d) return "—"; const x = new Date(d.length===10 ? d+"T12:00" : d); return isNaN(x) ? d : x.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit"}); }
+function draw(){
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.k===tab));
+  const q = $("#q").value.toLowerCase();
+  const list = rows.filter(r => (tab==="todos") || (tab==="longo" && !isShort(r)) || (tab==="short" && isShort(r)) || (tab==="agendado" && st(r.it)[0].startsWith("agendado")))
+    .filter(r => !q || [r.it.title, r.v.title, r.v.theme, r.v.id].join(" ").toLowerCase().includes(q));
+  $("#rows").innerHTML = list.length ? list.map(r => {
+    const [s,c] = st(r.it);
+    const actions = r.it.url ? `<a class="btn" href="${esc(r.it.url)}" target="_blank" rel="noopener">YouTube</a> <a class="btn" href="https://studio.youtube.com/video/${esc(r.it.youtube_id)}/edit" target="_blank" rel="noopener">Studio</a>` : "";
+    return `<tr><td class="meta">${fmt(r.it.publish_at || r.v.created)}</td>
+      <td><div class="title">${esc(r.it.title || r.v.title || r.v.id)}</div><div class="meta">${esc(r.v.format || "")}${r.v.theme ? " · " + esc(r.v.theme) : ""}</div></td>
+      <td><span class="badge">${esc(r.kind)}</span></td><td><span class="badge ${c}">${esc(s)}</span></td><td style="text-align:right">${actions}</td></tr>`;
+  }).join("") : `<tr><td colspan="5" class="empty">Nenhum vídeo ainda. A primeira produção aparece aqui.</td></tr>`;
+}
+draw();
+$("#links").innerHTML = D.links.length ? D.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener"><span>${esc(l.label)}</span><span class="u">${esc(l.url)}</span></a>`).join("")
+  : `<div class="meta">Os links da oferta e das páginas de venda aparecem aqui quando forem definidos.</div>`;
+</script>
+</body>
+</html>

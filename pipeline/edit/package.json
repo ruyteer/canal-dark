@@ -1,0 +1,9 @@
+{
+  "name": "canal-dark-edit",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Modelo de edição do canal dark (HyperFrames)",
+  "dependencies": {
+    "hyperframes": "0.9.10"
+  }
+}
