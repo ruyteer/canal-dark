@@ -54,6 +54,7 @@ python3 pipeline/research.py --days 14 --out producao/<id>/pesquisa.json
 - Para confirmar os candidatos, colete pelo menos 4 vídeos por canal e use `python3 pipeline/yt/swipe.py coletados.json --min 2.0` (múltiplo sobre a mediana do próprio canal; veja `docs/CONHECIMENTO-YOUTUBE.md` §6).
 - Escolha 3 candidatos, nomeie o formato de cada um (os formatos estão em `CANAL.md`) e descarte os que repetem tema ou formato dos últimos 10 vídeos do registro.
 - Escolha 1 e escreva o porquê em `producao/<id>/ideia.md` (referências com link, formato, ângulo próprio).
+- **Só modele vídeo que provou engajamento.** Antes de escolher o modelo, confira views, views/dia, likes ÷ views e comentários. Descarte candidato com menos de 1.000 views (ou menos de 10× a mediana de views/dia da pesquisa), com quase nenhum like ou sem comentários: vídeo que não engajou não ensina nada e copiar o ângulo dele é copiar um fracasso. Registre em `ideia.md` as métricas do modelo escolhido (views, likes, comentários, canal, link). Se nenhum candidato passar, amplie a janela de busca ou os termos antes de seguir.
 - Copie o **formato**, nunca o roteiro de ninguém.
 
 ### 2. Roteiro

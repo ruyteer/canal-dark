@@ -17,6 +17,7 @@ Se `CANAL.md` ainda tiver **[DEFINIR]** no nicho, nas palavras-chave ou na voz, 
 
 - **Todo upload é privado e agendado para o dia seguinte** (`upload.py --days 1 --at HH:MM`). Nunca publique na hora e nunca mude a visibilidade ou o agendamento de um vídeo já enviado: o dono do canal revisa, muda o horário ou publica antes, pelo Studio.
 - **Nada de repetir.** Antes de escolher tema, título, gancho, fundos, memes, sons e música, compare com os últimos 10 vídeos em `registro/videos.json`. Varie formato, estrutura, cenário e ritmo. O YouTube pune conteúdo repetitivo.
+- **Só modele o que engajou.** O vídeo-modelo tem que ter views, likes e comentários que provem tração (veja `ROTINA.md` → Pesquisa). Modelar vídeo de poucas views é copiar um fracasso. Modele o formato e o gancho, nunca o roteiro.
 - **Pesquisa sempre fresca.** Ideias novas saem de vídeos publicados nos últimos 14 dias (`pipeline/research.py`), nunca de memória ou de pesquisas antigas.
 - **Registre tudo.** Cada vídeo e cada Short editado ou enviado entra em `registro/videos.json` (e na tabela de `registro/README.md`) com tema, roteiro, arquivos usados, link do YouTube e data. Faça commit e push no fim de cada rotina.
 - **Chaves só por variável de ambiente** (`ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `YOUTUBE_API_KEY`, `YOUTUBE_CLIENT_ID`, `YOUTUBE_CLIENT_SECRET`, `YOUTUBE_REFRESH_TOKEN`, `UNSPLASH_ACCESS_KEY`, `PEXELS_API_KEY`). Nunca escreva uma chave em arquivo, commit, log ou mensagem. Se faltar uma, pare a etapa que depende dela e avise.

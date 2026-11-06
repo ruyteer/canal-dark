@@ -54,7 +54,7 @@ Entregue **o maior vazamento e uma mudança** para ele, não uma lista de cinco.
 
 ## 6. Pesquisa: o que está funcionando de verdade
 
-Views brutas ranqueiam o tamanho do canal, não a ideia. `research.py` já ordena por views ÷ inscritos; para confirmar candidatos, colete **pelo menos 4 vídeos por canal** e rode `python3 pipeline/yt/swipe.py coletados.json --min 2.0`: ele ranqueia pelo múltiplo sobre a **mediana do próprio canal** e nomeia a fórmula do título (é julgamento sobre as palavras do título, não prova do motivo do sucesso). Entregue os 5 melhores, a fórmula de cada, **a única coisa estrutural que têm em comum** e quais deles dá para fazer esta semana com o que temos. Só listas públicas, nunca sessão logada.
+Views brutas ranqueiam o tamanho do canal, não a ideia. `research.py` já ordena por views ÷ inscritos; para confirmar candidatos, colete **pelo menos 4 vídeos por canal** e rode `python3 pipeline/yt/swipe.py coletados.json --min 2.0`: ele ranqueia pelo múltiplo sobre a **mediana do próprio canal** e nomeia a fórmula do título (é julgamento sobre as palavras do título, não prova do motivo do sucesso). Entregue os 5 melhores, a fórmula de cada, **a única coisa estrutural que têm em comum** e quais deles dá para fazer esta semana com o que temos. Só listas públicas, nunca sessão logada. **Piso de qualidade:** não modele vídeo com menos de 1.000 views, com quase nenhum like ou sem comentários; o múltiplo sozinho engana em canal pequeno (83 views pode dar 80×). Olhe views, likes ÷ views e comentários juntos.
 
 ## 7. Comentários (rotina de análise)
 
