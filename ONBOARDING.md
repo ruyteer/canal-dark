@@ -19,7 +19,11 @@ Pergunte, nesta ordem:
 
 Com isso, proponha de 5 a 10 **palavras-chave de pesquisa** e uma **linha editorial** de uma frase. Se `YOUTUBE_API_KEY` já existir, rode `python3 pipeline/research.py --days 14` para mostrar o que está viralizando com essas palavras e ajuste com o usuário.
 
-## 2. Voz
+## 2. Voz de escrita
+
+Peça 3 áudios, vídeos ou textos que o dono já fez (ou 3 trechos de fala dele). Escreva em `CANAL.md` → "Voz de escrita": para quem fala (uma pessoa), como fala de verdade, palavras que nunca usa e que usa, o que nunca afirma. Mostre e ajuste.
+
+## 2b. Voz clonada
 
 - O usuário clona a própria voz (ou escolhe uma) no ElevenLabs e passa o **nome** e o **Voice ID** (o ID não é segredo; a chave da API é).
 - Grave em `CANAL.md` no formato exato: ``voice_id `XXXXXXXX` ``.

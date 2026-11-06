@@ -13,6 +13,14 @@
 - **Idioma:** [DEFINIR, ex.: português do Brasil]
 - **Voz (ElevenLabs):** [DEFINIR: nome da voz], voice_id `[DEFINIR]` (não é segredo; a chave da API é). É a única fonte da voz para o `tts.py`.
 
+### Voz de escrita (todo roteiro respeita)
+
+- **Para quem eu falo:** [DEFINIR: UMA pessoa, descrita com precisão, não "o público"]
+- **Como eu falo de verdade:** [DEFINIR: cole trechos reais de áudios ou vídeos do dono; se não houver, a rotina pede três e escreve esta seção]
+- **Palavras que eu nunca uso:** [DEFINIR, ex.: "game-changer", "bora mergulhar"]
+- **Palavras e cacoetes que eu uso:** [DEFINIR]
+- **O que eu nunca afirmo:** [DEFINIR: números sem fonte, resultados que não são meus, ferramentas que não usei]
+
 ### Limites (obrigatórios em qualquer nicho)
 
 - **Nada de dado inventado.** Números, casos e citações só com fonte pública aberta e confirmada (veja a checagem de fatos em `ROTINA.md`).

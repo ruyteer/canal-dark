@@ -2,6 +2,7 @@
 
 Uso:
   python3 pipeline/analytics.py --days 28 --out registro/metricas/AAAA-MM-DD.json
+  python3 pipeline/analytics.py --retencao <VIDEO_ID> --out retencao.csv     # curva de retenção (para pipeline/yt/retencao.py)
 
 Mostra, por vídeo: views, minutos assistidos, duração média, % média assistida,
 inscritos ganhos, likes, comentários e compartilhamentos, mais o multiplicador sobre a mediana do canal.
@@ -21,9 +22,22 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--days", type=int, default=28)
     ap.add_argument("--out")
+    ap.add_argument("--retencao", help="ID do vídeo: salva a curva de retenção em CSV (posição %, % assistindo)")
     a = ap.parse_args()
     token = google_access_token()
     auth = {"Authorization": f"Bearer {token}"}
+    if a.retencao:
+        rep = http("GET", "https://youtubeanalytics.googleapis.com/v2/reports", headers=auth, params={
+            "ids": "channel==MINE", "startDate": "2020-01-01", "endDate": dt.date.today().isoformat(),
+            "metrics": "audienceWatchRatio", "dimensions": "elapsedVideoTimeRatio", "filters": f"video=={a.retencao}"})
+        linhas = sorted((r[0] * 100, r[1] * 100) for r in rep.get("rows", []))
+        if not linhas:
+            raise SystemExit("A API não devolveu curva de retenção para esse vídeo (precisa de views suficientes e de estar público).")
+        saida = a.out or f"retencao-{a.retencao}.csv"
+        with open(saida, "w", encoding="utf-8") as f:
+            f.write("posicao_pct,assistindo_pct\n" + "\n".join(f"{x:.2f},{y:.2f}" for x, y in linhas) + "\n")
+        print(f"{len(linhas)} pontos em {saida}. Leia com: python3 pipeline/yt/retencao.py {saida} --duration <segundos>")
+        return
     end = dt.date.today()
     start = end - dt.timedelta(days=a.days)
     rep = http("GET", "https://youtubeanalytics.googleapis.com/v2/reports", headers=auth, params={

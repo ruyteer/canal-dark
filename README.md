@@ -15,6 +15,7 @@ Modelo de canal no YouTube em que você não aparece: o Claude pesquisa o que es
 |---|---|
 | Produção | Pesquisa (últimos 14 dias) → roteiro com checagem de fatos e oferta → narração → mídias → edição → vídeo longo + 3 Shorts → miniatura → upload privado agendado → registro |
 | Análise | Números do canal → `aprendizados.md` → ajusta as próximas ideias |
+| Qualidade de YouTube | Ganchos pontuados (21 fórmulas), título e miniatura como par, Shorts que sobrevivem sozinhos, retenção lida por momento ([`docs/CONHECIMENTO-YOUTUBE.md`](docs/CONHECIMENTO-YOUTUBE.md), ferramentas em `pipeline/yt/`) |
 | Painel | Página compartilhada com todos os vídeos, links e status ([`pipeline/painel/`](pipeline/painel/README.md)) |
 | Produto | E-book em PDF criado pelo Claude ([`produto/`](produto/README.md)) |
 | Vendas | Página de vendas com checkout Kiwify, Kirvano, Cakto, Hotmart… ([`vendas/`](vendas/README.md)) |
@@ -32,6 +33,7 @@ CANAL.md             nicho, oferta, formato, tom (preenchido no onboarding)
 aprendizados.md      o que funciona (atualizado pela análise)
 ROTINA.md            passo a passo das rotinas
 pipeline/            scripts (pesquisa, narração, mídias, edição, miniatura, upload, análise, registro, painel)
+pipeline/yt/         ganchos, título+miniatura, capítulos, retenção, virais (adaptado do youtube-agent-skill, MIT)
 pipeline/edit/       modelo de edição no HyperFrames
 produto/             criação do produto digital
 vendas/              página de vendas com checkout
