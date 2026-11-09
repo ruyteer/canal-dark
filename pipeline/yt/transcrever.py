@@ -63,7 +63,10 @@ def baixar(url, pasta):
     cmd = ["yt-dlp", "--skip-download", "--write-auto-subs", "--write-subs", "--sub-langs", "pt.*,en.*,es.*",
            "--sub-format", "vtt", "--print-json", "--no-warnings", "-o", os.path.join(pasta, "%(id)s.%(ext)s"),
            f"https://www.youtube.com/watch?v={vid}"]
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    except FileNotFoundError:
+        sys.exit("yt-dlp não encontrado. Instale com: pip install -U yt-dlp (e abra um terminal novo).")
     info = {}
     try:
         info = json.loads(r.stdout.strip().splitlines()[-1])
@@ -71,7 +74,7 @@ def baixar(url, pasta):
         pass
     arqs = sorted(glob.glob(os.path.join(pasta, vid + ".*.vtt")))
     arqs.sort(key=lambda a: (0 if ".pt" in a else 1 if ".en" in a else 2))  # prefere o idioma do vídeo
-    return vid, info, (arqs[0] if arqs else None), r.stderr[-200:]
+    return vid, info, (arqs[0] if arqs else None), (r.stderr or "")
 
 
 def main():
@@ -88,8 +91,14 @@ def main():
         for u in urls:
             vid, info, vtt, err = baixar(u, pasta)
             if not vtt:
-                pulados.append((u, err.strip().splitlines()[-1] if err.strip() else "sem legenda"))
-                print("sem legenda:", u)
+                linhas = [l for l in err.strip().splitlines() if l.strip()]
+                motivo = linhas[-1] if linhas else "o YouTube não devolveu legenda para este vídeo"
+                pulados.append((u, motivo))
+                print("sem legenda:", u.split("#")[0].strip(), "\n   motivo:", motivo[:300])
+                if "Sign in" in err or "bot" in err.lower():
+                    print("   (o YouTube pediu confirmação de que você não é um robô: eu não contorno isso; tente de outra rede ou mande as transcrições copiadas do YouTube)")
+                if "JavaScript runtime" in err or "js-runtimes" in err or "deno" in err.lower():
+                    print("   (a versão nova do yt-dlp precisa de um executor de JavaScript: instale o Deno, https://deno.com, e tente de novo)")
                 continue
             texto = bloco(ler_vtt(vtt))
             titulo = info.get("title", vid)
