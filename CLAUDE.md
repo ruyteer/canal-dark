@@ -36,7 +36,7 @@ Se `CANAL.md` ainda tiver **[DEFINIR]** no nicho, nas palavras-chave ou na voz, 
 - `pipeline/upload.py`: sobe como privado, agendado para o dia seguinte.
 - `pipeline/analytics.py`: puxa os números do canal.
 - `pipeline/registry.py`: lê e grava o registro.
-- `pipeline/yt/`: `hookscore.py` (pontua ganchos), `titulo.py` (título + miniatura como par), `capitulos.py`, `retencao.py` (onde as pessoas saem), `swipe.py` (virais pelo múltiplo da mediana do canal) e `hooks.json` (21 fórmulas). A teoria está em `docs/CONHECIMENTO-YOUTUBE.md`: leia antes de escrever roteiro, título ou analisar resultados.
+- `pipeline/yt/`: `hookscore.py` (pontua ganchos), `titulo.py` (título + miniatura como par), `capitulos.py`, `retencao.py` (onde as pessoas saem), `swipe.py` (virais pelo múltiplo da mediana do canal), `transcrever.py` (baixa as legendas de uma lista de vídeos; rode no computador do dono, não na nuvem) e `hooks.json` (21 fórmulas). A teoria está em `docs/CONHECIMENTO-YOUTUBE.md`: leia antes de escrever roteiro, título ou analisar resultados.
 - `pipeline/thumbnail.py`: miniatura com foto de banco de imagens e frase de expectativa.
 - `pipeline/painel/`: painel compartilhado (artefato) com vídeos, links e status. Atualize ao fim de cada rotina.
 - `produto/`: criação do produto digital (e-book em PDF).
