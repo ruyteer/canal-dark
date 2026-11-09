@@ -60,13 +60,15 @@ def bloco(cues, passo=30):
 def baixar(url, pasta):
     vid = re.search(r"(?:v=|youtu\.be/|shorts/)([\w-]{11})", url)
     vid = vid.group(1) if vid else url.strip()
-    cmd = ["yt-dlp", "--skip-download", "--write-auto-subs", "--write-subs", "--sub-langs", "pt.*,en.*,es.*",
+    cmd = [sys.executable, "-m", "yt_dlp", "--skip-download", "--write-auto-subs", "--write-subs", "--sub-langs", "pt.*,en.*,es.*",
            "--sub-format", "vtt", "--print-json", "--no-warnings", "-o", os.path.join(pasta, "%(id)s.%(ext)s"),
            f"https://www.youtube.com/watch?v={vid}"]
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
     except FileNotFoundError:
-        sys.exit("yt-dlp não encontrado. Instale com: pip install -U yt-dlp (e abra um terminal novo).")
+        sys.exit("Python não encontrado.")
+    if "No module named yt_dlp" in (r.stderr or ""):
+        sys.exit("yt-dlp não está instalado neste Python. Rode: python3 -m pip install -U --pre yt-dlp")
     info = {}
     try:
         info = json.loads(r.stdout.strip().splitlines()[-1])
