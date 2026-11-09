@@ -17,6 +17,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 
 
 def ts(s):
@@ -61,7 +62,7 @@ def baixar(url, pasta):
     vid = re.search(r"(?:v=|youtu\.be/|shorts/)([\w-]{11})", url)
     vid = vid.group(1) if vid else url.strip()
     cmd = [sys.executable, "-m", "yt_dlp", "--skip-download", "--write-auto-subs", "--write-subs", "--sub-langs", "pt.*,en.*,es.*",
-           "--sub-format", "vtt", "--print-json", "--no-warnings", "-o", os.path.join(pasta, "%(id)s.%(ext)s"),
+           "--sub-format", "vtt", "--print-json", "--no-warnings", "--sleep-requests", "2", "--sleep-subtitles", "6", "-o", os.path.join(pasta, "%(id)s.%(ext)s"),
            f"https://www.youtube.com/watch?v={vid}"]
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace")
@@ -91,7 +92,15 @@ def main():
     pulados, partes = [], []
     with tempfile.TemporaryDirectory() as pasta:
         for u in urls:
-            vid, info, vtt, err = baixar(u, pasta)
+            for tentativa in range(3):  # se o YouTube limitar (429), espera e tenta de novo, sem pressa
+                vid, info, vtt, err = baixar(u, pasta)
+                if vtt or "429" not in err:
+                    break
+                espera = 90 * (tentativa + 1)
+                print(f"   o YouTube limitou os pedidos (429). Aguardando {espera}s e tentando de novo...")
+                time.sleep(espera)
+            if vtt:
+                time.sleep(10)  # intervalo entre vídeos
             if not vtt:
                 linhas = [l for l in err.strip().splitlines() if l.strip()]
                 motivo = linhas[-1] if linhas else "o YouTube não devolveu legenda para este vídeo"
